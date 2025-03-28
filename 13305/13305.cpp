@@ -10,7 +10,12 @@ using namespace std;
 //[1]--[1]--[1]--[1]        <= 기름값이 같다면 , 걸리는 모든 거리를 더한 값이 최소기름값
 
 //    3    3    4
-//[2]--[1]--[1]--[1]        <= 기름값이 같다면 , 걸리는 모든 거리를 더한 값이 최소기름값
+//[2]--[1]--[2]--[3]        <= 기름값이 같다면 , 걸리는 모든 거리를 더한 값이 최소기름값
+// 0    1    2    3
+
+// city[0]에선 무조건 기름을 넣어야 한다.
+// city[0] < city[1] 면 city[0]에서 city[2]까지 기름넣고 감.
+// 즉 cheapCity = 0 으로부터 시작 [0] < [1] 면 cheapCity = 0 [0] > [1] 면 cheapCity = 1
 unsigned int N;
 int main(void)
 {
@@ -19,17 +24,39 @@ int main(void)
     // 주유소 가격 N개 입력
     // 총 거리는 1 ~ 1,000,000,000 자연수
     // 리터당 가격은 1 ~ 1,000,000,000
+
     cin >> N;
-    pair<unsigned int, unsigned int> arr[N]; // <다음도시와 연결하는 길이 , 기름가격>
+    // pair<unsigned int, unsigned int> arr[N]; // <다음도시와 연결하는 길이 , 기름가격>
+    long citys[N];
+    int distances[N - 1];
+
     for (int i = 0; i < N - 1; i++)
     {
-        cin >> arr[i].first;
+        cin >> distances[i];
     }
 
     for (int i = 0; i < N; i++)
     {
-        cin >> arr[i].second;
+        cin >> citys[i];
     }
 
+    long long cheapCity = 0;
+    int disIdx = 0;
+    unsigned long long totalPrice = citys[cheapCity] * distances[disIdx++];
+
+    for (int i = 1; i < N - 1; i++)
+    {
+        if (citys[cheapCity] < citys[i])
+        {
+            totalPrice += citys[cheapCity] * distances[disIdx++];
+        }
+        else
+        {
+            totalPrice += citys[i] * distances[disIdx++];
+            cheapCity = i;
+        }
+    }
+
+    cout << totalPrice << endl;
     return 0;
 }
