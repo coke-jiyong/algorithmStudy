@@ -4,12 +4,17 @@
 using namespace std;
 int main(void)
 {
-    vector<int> a;
-    a.push_back(1);
-    a.push_back(2);
-    a.push_back(3);
-    a.push_back(4);
 
-    cout << a.size() << endl;
+    string a = "abcd";
+    string b = "defg";
+
+    if (a > b)
+    {
+        cout << "a" << endl;
+    }
+    else
+    {
+        cout << "b" << endl;
+    }
     return 0;
 }
