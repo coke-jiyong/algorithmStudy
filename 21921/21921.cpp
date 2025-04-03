@@ -17,7 +17,7 @@ int main(void)
 
     int cnt = 1;
     int max = sum;
-    for (int i = 0; i < v.size() - X; i++)
+    for (int i = 0; i <= v.size() - X; i++)
     {
         sum -= v[i];
         sum += v[X + i];

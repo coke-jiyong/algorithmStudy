@@ -27,8 +27,7 @@ int main(void)
 {
     cin.tie(NULL);
     ios::sync_with_stdio(false);
-    // 자주나온 순서 , 같다면 단어의 길이, 그거또한 같다면 알파벳 순서
-    // 자주나온 순서는 map < string ,int > 로 입력받을때마다 ++ , 단어의길이는
+
     int N, M;
     cin >> N >> M;
     map<string, int> strMap;
