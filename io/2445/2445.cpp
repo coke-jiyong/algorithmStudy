@@ -18,15 +18,8 @@ int main(void)
         cout << endl;
     }
 
-    // for (int i = N - 1; 0 < i; i--)
-    // {
-    //     for (int j = 0; j < i; j++)
-    //         cout << "*";
-    //     for (int k =  2*N - i*2)   8 - 6 2 1 0+
-    //         cout << " ";
-    //     for (int j = 0; j < i; j++)
-    //         cout << "*";
-    // }
+
+    
 
     return 0;
 }

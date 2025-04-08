@@ -8,16 +8,7 @@ int main(void)
 
     for (int i = 0; i < N; i++)
     {
-        if (i >= N - i - 1)
-            cout << "*";
-        else
-            cout << " ";
+        if (i > )
     }
-    cout << endl;
-    for (int i = 0; i < N; i++)
-    {
-        cout << "*";
-    }
-    cout << endl;
     return 0;
 }
