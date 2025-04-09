@@ -15,8 +15,21 @@ int main(void)
     { // test case
         int n;
         cin >> n;
-        vector<int> arr(n);
+        vector<vector<int>> row(2);
         for (int j = 0; j < 2; j++)
+        {
+            vector<int> col(n);
+            for (int i = 0; i < n; i++)
+                cin >> col[i];
+
+            row.push_back(col);
+        }
+        for (auto &i : row)
+        {
+            for (auto &j : i)
+                cout << j << ' ';
+            cout << '\n';
+        }
     }
     return 0;
 }
