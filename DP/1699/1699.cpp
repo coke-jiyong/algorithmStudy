@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 // 1 = 1^   1
-// 2 = 2^   1
+// 2 = 1^+1^   2
 // 3 = 1^+1^+1^ 3
 // 4 = 2^   1
 // 5 = 2^ + 1^  2
@@ -18,12 +18,18 @@ using namespace std;
 // 14 = 3^ + 2^ + 1^
 // 15 = 3^ + 2^ + 1^ + 1^
 // 14 = 4^
-
+int dp[100001];
 int main(void)
 {
     int N;
     cin >> N; // 7
-    int i = 1;
+    for (int i = 1; i <= N; i++)
+    {
+        dp[i] = i;
+        for (int j = 1; j * j <= i; j++)
+            dp[i] = min(dp[i], dp[i - j * j] + 1);
+    }
 
+    cout << dp[N] << endl;
     return 0;
 }
