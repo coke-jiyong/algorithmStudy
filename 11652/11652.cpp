@@ -23,11 +23,8 @@ int main(void)
     {
         if (i.second > answer.second)
             answer = i;
-        else if (i.second == answer.second)
-        {
-            if (i.first < answer.first)
-                answer = i;
-        }
+        else if (i.second == answer.second && i.first < answer.first)
+            answer = i;
     }
     cout << answer.first << endl;
     return 0;
