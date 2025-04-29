@@ -14,7 +14,7 @@ int main()
     //     int a = N[i] - '0';
     //     sum += (a * pow(2, idx++));
     // }
-    // string answer;
+    // string answe r;
     // while (sum != 0)
     // {
     //     int a = sum % 8;
