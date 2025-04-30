@@ -1,5 +1,7 @@
 #include <iostream>
+#include <algorithm>
 #include <cmath>
+#include <vector>
 using namespace std;
 
 int main()
@@ -10,20 +12,20 @@ int main()
     int powN = m - 1;
     for (int i = 0; i < m; i++)
     {
-        int n;
+        int n; // 여기서 n의 각 숫자는 0이상 A미만임이 보장
         cin >> n;
         base10 += pow(A, powN--) * n;
     }
-    cout << base10 << endl;
-    // string answer;
-    // while (base10 != 0)
-    // {
-    //     answer = to_string(base10 % B) + answer;
-    //     base10 /= B;
-    // }
+    vector<int> answer;
+    while (base10 != 0)
+    {
+        answer.push_back(base10 % B);
+        base10 /= B;
+    }
 
-    // for (int i = 0; i < answer.length(); i++)
-    //     cout << answer[i] << ' ';
-    // cout << '\n';
+    reverse(answer.begin(), answer.end());
+    for (auto &i : answer)
+        cout << i << ' ';
+    cout << '\n';
     return 0;
 }
