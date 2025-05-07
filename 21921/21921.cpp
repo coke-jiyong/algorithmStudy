@@ -3,42 +3,32 @@
 using namespace std;
 int main(void)
 {
-
-    int N, X;
+    int N, X, firstSum = 0;
     cin >> N >> X;
-
     vector<int> v(N);
     for (int i = 0; i < N; i++)
         cin >> v[i];
 
-    int sum = 0;
     for (int i = 0; i < X; i++)
-        sum += v[i];
+        firstSum += v[i];
 
-    int cnt = 1;
-    int max = sum;
-    for (int i = 0; i <= v.size() - X; i++)
+    int start = 0, end = X, cnt = 1, n = firstSum, max = firstSum;
+    while (end != N)
     {
-        sum -= v[i];
-        sum += v[X + i];
-        if (sum > max)
+        int a = n - v[start++] + v[end++];
+        if (a > max)
         {
-            max = sum;
+            max = a;
+            cnt = 1;
         }
-        else if (sum == max)
-        {
+        else if (a == max)
             cnt++;
-        }
+        n = a;
     }
-
     if (max == 0)
-    {
-        cout << "SAD" << endl;
-    }
+        cout << "SAD" << '\n';
     else
-    {
-        cout << max << endl
-             << cnt << endl;
-    }
+        cout << max << '\n'
+             << cnt << '\n';
     return 0;
 }
