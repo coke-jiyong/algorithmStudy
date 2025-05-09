@@ -1,80 +1,63 @@
-// #include <iostream>
-// #include <vector>
-// using namespace std;
-
-// int students[100001];
-// bool visited[100001];
-// int dfs(int n)
-// {
-//     visited[n] = true;
-//     if (visited[students[n]])
-//         return students[n];
-//     else
-//         return dfs(students[n]);
-// }
-// int main(void)
-// {
-//     int T;
-//     cin >> T;
-//     for (int i = 0; i < T; i++)
-//     {
-//         int n;
-//         cin >> n;
-//         int cnt = 0;
-//         for (int j = 1; j <= n; j++)
-//             cin >> students[j];
-
-//         for (int k = 1; k <= n; k++)
-//         {
-//             int a = dfs(k);
-//             if (k == a)
-//                 cnt++;
-//             fill(visited, visited + 100001, false);
-//         }
-//         cout << n - cnt << endl;
-//         fill(students, students + 100001, false);
-//     }
-//     return 0;
-// }
-
 #include <iostream>
+#include <vector>
 using namespace std;
 
+/*
+2
+7
+[1][2][3][4][5][6][7]
+ 3  1  3  7  3  4  6   ----------> 3
+8
+[1][2][3][4][5][6][7][8]
+ 1  2  3  4  5  6  7  8 ----------> 0
+
+[1]->3
+[3]->3 --> cycle!
+[2]->1 visited.
+[3]->3 visited.
+[4]->7
+[7]->6
+[6]->4 --> cycle!
+
+ */
 int students[100001];
 bool visited[100001];
-bool finished[100001];
+bool done[100001];
 int cnt;
-
-void dfs(int node)
+void dfs(int n)
 {
-    visited[node] = true;
-    int next = students[node];
+    visited[n] = true;
+    int next = students[n];
+    if (!visited[next])
+        dfs(next);
+    else if (!done[next]) // 사이클 발견 현재 n=6 next=4
+    {
+        for (int i = students[next]; i != next; i = students[i])
+            cnt++; // i가 7일때 +1 , 6일때 +1, 4일때 종료
+        cnt++;     // next 자기자신 ++
+    }
+    done[n] = true;
 }
 
-int main()
+int main(void)
 {
     int T;
     cin >> T;
-    while (T--)
+    for (int i = 0; i < T; i++)
     {
         int n;
         cin >> n;
         cnt = 0;
-
-        for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
         {
-            cin >> students[i];
-            visited[i] = false;
-            finished[i] = false;
+            cin >> students[j];
+            visited[j] = false;
+            done[j] = false;
         }
-
-        for (int i = 1; i <= n; i++)
-        {
-            if (!visited[i])
-                dfs(i);
-        }
-
-        cout << n - cnt << '\n'; // 팀을 이루지 못한 학생 수 출력
+        for (int k = 1; k <= n; k++)
+            if (!visited[k])
+                dfs(k);
+        cout << n - cnt << endl;
     }
     return 0;
 }
