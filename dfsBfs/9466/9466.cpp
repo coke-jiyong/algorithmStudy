@@ -24,6 +24,7 @@ int students[100001];
 bool visited[100001];
 bool done[100001];
 int cnt;
+
 void dfs(int n)
 {
     visited[n] = true;
@@ -41,6 +42,9 @@ void dfs(int n)
 
 int main(void)
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
     int T;
     cin >> T;
     for (int i = 0; i < T; i++)
