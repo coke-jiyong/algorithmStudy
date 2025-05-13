@@ -2,6 +2,7 @@
 #include <queue>
 #include <cstring>
 #include <set>
+#include <tuple>
 using namespace std;
 
 //                          ↑        →       ↓       ←
@@ -30,6 +31,7 @@ void name_tag_land(int r, int c, int tag)
 
     while (!q.empty())
     {
+        bool is_edge = false;
         int row = q.front().first;
         int col = q.front().second;
         q.pop();
@@ -45,9 +47,11 @@ void name_tag_land(int r, int c, int tag)
                 q.push({newR, newC});
                 ground[newR][newC] = tag;
             }
-            else if (ground[newR][newC] == 0)
-                edges.insert({row, col});
+            else if (ground[newR][newC] == 0 && is_edge == false)
+                is_edge = true;
         }
+        if (is_edge)
+            edges.insert({row, col});
     }
 }
 void print()
@@ -63,32 +67,38 @@ void print()
     for (auto &i : edges)
         cout << i.first << "," << i.second << endl;
 }
-int bfs(int row, int col)
+
+int bfs_from_edge()
 {
-    int landTag = ground[row][col];
-    int cnt = 0;
-    queue<pair<int, int>> q;
-    q.push({row, col});
+    memset(visited, false, sizeof(visited));
+    queue<tuple<int, int, int, int>> q;
+    for (auto &i : edges)
+        q.push({i.first, i.second, 0, ground[i.first][i.second]});
     while (!q.empty())
     {
-        int r = q.front().first;
-        int c = q.front().second;
+        auto t = q.front();
         q.pop();
+        int r = get<0>(t);
+        int c = get<1>(t);
+
         for (int i = 0; i < 4; i++)
         {
             int newR = r + way[i].first;
             int newC = c + way[i].second;
             if (newR < 0 || newC < 0 || newR >= N || newC >= N)
                 continue;
-            if (ground[newR][newC] != 0 && ground[newR][newC] != landTag)
-                return cnt;
+            if (ground[newR][newC] != 0 && ground[newR][newC] != get<3>(t))
+                return get<2>(t);
             if (!visited[newR][newC] && ground[newR][newC] == 0)
-                q.push({newR, newC});
+            {
+                q.push({newR, newC, get<2>(t) + 1, ground[newR][newC]});
+                visited[newR][newC] = true;
+            }
         }
-        cnt++;
     }
-    return cnt;
+    return -1;
 }
+
 void solution()
 {
     int tag = 2;
@@ -102,14 +112,8 @@ void solution()
             }
         }
     }
-
-    // cout << bfs(2, 1) << endl;
-    //  int min = INT32_MAX;
-    //  for (auto &i : edges)
-    //  {
-    //      int res = bfs(i.first, i.second);
-    //      min = min > res ? res : min;
-    //  }
+    int res = bfs_from_edge();
+    cout << res << endl;
 }
 
 int main(void)
@@ -120,10 +124,5 @@ int main(void)
 
     print();
 
-    for (auto &i : edges)
-    {
-        int res = bfs(i.first, i.second);
-        cout << "edge{" << i.first << "," << i.second << "} : " << res << endl;
-    }
     return 0;
 }
