@@ -11,6 +11,12 @@ int ground[101][101];
 bool visited[101][101];
 vector<pair<int, int>> edges[100001]; // 섬의 태그는 101을 초과 할 수 있음 . .. .
 int N;
+typedef struct info
+{
+    int row;
+    int col;
+    int cnt;
+} INFO;
 void input()
 {
     ios::sync_with_stdio(0);
@@ -54,21 +60,14 @@ void name_tag_land(int r, int c, int tag)
             edges[tag].push_back({row, col});
     }
 }
-struct info
-{
-    int row;
-    int col;
-    int cnt;
-    int island;
-} INFO;
 int bfs_from_edge(int tag)
 {
     memset(visited, false, sizeof(visited));
-    queue<info> q;
-    // 0 = edgesRow , 1 = edgesCol , 2 = count , 3 = islandNum
+    queue<INFO> q;
+    // 0 = edgesRow , 1 = edgesCol , 2 = count
     for (auto &i : edges[tag])
     {
-        q.push(info{i.first, i.second, 0, ground[i.first][i.second]});
+        q.push(INFO{i.first, i.second, 0});
         visited[i.first][i.second] = true; // 시작점도 방문처리! 집중하자
     }
 
@@ -85,19 +84,18 @@ int bfs_from_edge(int tag)
             if (newR < 0 || newC < 0 || newR >= N || newC >= N)
                 continue;
 
-            if (ground[newR][newC] != 0 && ground[newR][newC] != t.island)
+            if (ground[newR][newC] != 0 && ground[newR][newC] != tag)
                 return t.cnt;
 
             if (!visited[newR][newC] && ground[newR][newC] == 0)
             {
-                q.push(info{newR, newC, t.cnt + 1, t.island}); // 현재 섬의 태그를 갱신시키지말고 그대로 넣어줘야 함.
+                q.push(INFO{newR, newC, t.cnt + 1}); // 현재 섬의 태그를 갱신시키지말고 그대로 넣어줘야 함.
                 visited[newR][newC] = true;
             }
         }
     }
     return -1;
 }
-
 void solution()
 {
     int tag = 2;
@@ -117,7 +115,6 @@ void solution()
 
     cout << res << endl;
 }
-
 int main(void)
 {
     input();
