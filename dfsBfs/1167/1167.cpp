@@ -20,37 +20,41 @@ void input()
                 break;
             cin >> weight;
             v[j].push_back({node, weight});
-            v[node].push_back({j, weight});
         }
     }
 }
-int cnt = 0;
-int dfs(int n)
+int maxDist = 0;
+int farNode = 0;
+void dfs(int node, int weight)
 {
-    visited[n] = true;
-    if (v[n].size() == 1)
+    if (visited[node])
+        return;
+    visited[node] = true;
+    if (weight > maxDist)
     {
-        if (!visited[v[n][0].first])
-        {
-            cnt += v[n][0].second;
-            dfs(v[n][0].first);
-        }
+        farNode = node;
+        maxDist = weight;
     }
-    else
+
+    for (auto &i : v[node])
     {
-        int max = 0;
-        for (auto &i : v[n])
-            if (!visited[i.first])
-                max = max < i.second ? i.second : max;
+        int nextNode = i.first;
+        int nextWeight = i.second;
+        dfs(nextNode, nextWeight + weight);
     }
 }
 
 // sizeof(visited)
 void sol()
 {
-    for (int i = 1; i <= V; i++)
-    {
-    }
+    // 임의의 노드A에서 가장 먼 노드B를 구함.
+    // 구한 노드B에서 가장 먼 노드C를 구함
+    // B~C의 거리가 트리의 지름
+    dfs(2, 0);
+    maxDist = 0;
+    memset(visited, false, sizeof(visited));
+    dfs(farNode, 0);
+    cout << maxDist << endl;
 }
 /*
 5
@@ -63,5 +67,6 @@ void sol()
 int main(void)
 {
     input();
+    sol();
     return 0;
 }
