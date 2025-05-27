@@ -6,6 +6,7 @@
         "utility": "cpp",
         "iostream": "cpp",
         "ostream": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "span": "cpp"
     }
 }

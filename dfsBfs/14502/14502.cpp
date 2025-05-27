@@ -41,7 +41,7 @@ int bfs(pair<int, int> wall1, pair<int, int> wall2, pair<int, int> wall3)
 
     // bfs진행
     queue<pair<int, int>> virus;
-    memset(visited, false, sizeof(visited)); // visited[N][M] 썼다가 에러 못찾음 .. 쓰지말자 . . .
+    memset(visited, false, sizeof(visited)); // visited[N][M] (동적배열) 썼다가 에러 못찾음 .. 쓰지말자 . . .
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < M; j++)
