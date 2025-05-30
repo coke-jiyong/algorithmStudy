@@ -1,19 +1,23 @@
 #include <iostream>
 using namespace std;
-int how_many_zero(int n)
+void how_many_zero(int n)
 {
-    int answer = 0;
+    int a = 0;
+    int b = 0;
+
+    for (int i = 2; i <= n; i *= 2)
+        a += n / i;
     for (int i = 5; i <= n; i *= 5)
-        answer += n / i;
-    return answer;
+        b += n / i;
+    cout << "2: " << a << "개\n"
+         << "5: " << b << "개\n";
 }
 
 int main(void)
 {
-    int n, m;
-    cin >> n >> m;
-    int a = how_many_zero(m) + how_many_zero(n - m);
-    int b = how_many_zero(n);
-    cout << b - a << endl;
+    // int n, m;
+    // cin >> n >> m;
+
+    how_many_zero(10);
     return 0;
 }
