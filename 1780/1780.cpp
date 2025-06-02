@@ -1,48 +1,53 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int arr[10]; // [0] -> -1 개수 , [1]-> 0개수, [2]->1개수
-int main(void)
+int arr[2188][2188];
+int paper[3];
+int N;
+void input()
 {
-    int N;
     cin >> N;
-    vector<vector<int>> v(N, vector<int>(N));
     for (int i = 0; i < N; i++)
         for (int j = 0; j < N; j++)
-            cin >> v[i][j];
+            cin >> arr[i][j];
+}
 
-    // 0~2   3~5     6~8
-    // 0~2   0~2     0~2
+void sol(int n, pair<int, int> pos) // 3 6,6
+{
+    int row = pos.first;
+    int col = pos.second;
+    int base = arr[row][col];
+    bool f = false;
 
-    // 0~2   3~5     6~8
-    // 3~5   3~5     3~5
-
-    // 0~2   3~5     6~8
-    // 6~8   6~8     6~8
-
-    for (int row = 0; row < N; row += 3)
+    for (int i = row; i < row + n; i++)
+        for (int j = col; j < col + n; j++)
+            if (base != arr[i][j])
+                f = true;
+    if (!f)
     {
-        for (int col = 0; col < N; col += 3)
-        {
-            int base = v[row][col];
-            bool f = false;
-            for (int i = row; i < row + 3; i++)
-                for (int j = col; j < col + 3; j++)
-                    if (base != v[i][j])
-                        f = true;
-
-            if (!f)
-                arr[base + 1]++;
-            else
-            {
-                for (int i = row; i < row + 3; i++)
-                    for (int j = col; j < col + 3; j++)
-                        arr[v[i][j] + 1]++;
-            }
-        }
+        paper[base + 1]++;
+        return;
     }
-    for (int i = 0; i < 3; i++)
-        cout << arr[i] << endl;
 
+    int next = n / 3;
+    if (next == 1)
+    {
+        for (int i = row; i < row + n; i += next)
+            for (int j = col; j < col + n; j += next)
+                paper[arr[i][j] + 1]++;
+
+        return;
+    }
+
+    for (int i = row; i < row + n; i += next)
+        for (int j = col; j < col + n; j += next)
+            sol(next, {i, j});
+}
+int main(void)
+{
+    input();
+    sol(N, {0, 0});
+    for (int i = 0; i < 3; i++)
+        cout << paper[i] << endl;
     return 0;
 }
