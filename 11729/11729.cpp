@@ -2,6 +2,7 @@
 #include <vector>
 using namespace std;
 int N;
+int cnt;
 void input()
 {
     cin >> N;
@@ -9,6 +10,7 @@ void input()
 
 void hanoi(int n, char from, char via, char to)
 {
+    cout << "current cnt: " << ++cnt << endl;
     if (n == 1)
     {
         cout << from << ' ' << to << endl;
@@ -19,6 +21,7 @@ void hanoi(int n, char from, char via, char to)
     cout << from << ' ' << to << endl;
     hanoi(n - 1, via, from, to);
 }
+
 int main(void)
 {
     input();
