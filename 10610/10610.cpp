@@ -4,7 +4,6 @@
 using namespace std;
 string N;
 vector<int> v;
-#define MAX 100000
 void input()
 {
     cin >> N;
@@ -20,9 +19,7 @@ void sol()
         sum += i;
 
     if (v[v.size() - 1] != 0 || sum % 3 != 0)
-    {
         cout << -1 << endl;
-    }
     else
     {
         for (auto i : v)
