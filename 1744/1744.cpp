@@ -20,41 +20,56 @@ void input()
     while (N--)
     {
         cin >> a;
-        if (a >= 0)
+        if (a > 0)
             pos.push_back(a);
         else
             neg.push_back(a);
     }
 }
-void debug()
-{
-    cout << "---pos---" << endl;
-    for (auto &i : pos)
-        cout << i << ' ';
-    cout << "\n---neg---" << endl;
-    for (auto &i : neg)
-        cout << i << ' ';
-    cout << endl;
-}
+
 void sol()
 {
-    sort(pos.begin(), pos.end());
+    sort(pos.begin(), pos.end(), [](int a, int b)
+         { return a > b; });
     sort(neg.begin(), neg.end());
-    //    debug();
     int answer = 0;
-    int len = pos.size();
-    if (len % 2 == 1)
+    int size = pos.size();
+    if (size % 2 == 0)
     {
-        // 뒤에서부터 곱하면서 와야함
-    }
-    else
-    {
-        for (int i = 0; i < len; i += 2)
+        for (int i = 0; i < size; i += 2)
         {
-            if (pos[i] == 1 || pos[i] == 0)
+            if (pos[i + 1] <= 1)
                 answer += (pos[i] + pos[i + 1]);
             else
                 answer += (pos[i] * pos[i + 1]);
         }
     }
+    else
+    {
+        int i = 0;
+        for (; i < size - 1; i += 2)
+        {
+            if (pos[i + 1] <= 1)
+                answer += (pos[i] + pos[i + 1]);
+            else
+                answer += (pos[i] * pos[i + 1]);
+        }
+        answer += pos[i];
+    }
+
+    size = neg.size();
+    if (size % 2 == 0)
+    {
+        for (int i = 0; i < size; i += 2)
+            answer += (neg[i] * neg[i + 1]);
+    }
+    else
+    {
+        int i = 0;
+        for (; i < size - 1; i += 2)
+            answer += (neg[i] * neg[i + 1]);
+        answer += neg[i];
+    }
+    cout << answer << endl;
+    return;
 }
