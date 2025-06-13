@@ -16,6 +16,7 @@
         "vector": "cpp",
         "initializer_list": "cpp",
         "algorithm": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "set": "cpp"
     }
 }

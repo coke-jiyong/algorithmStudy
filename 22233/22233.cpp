@@ -1,13 +1,9 @@
 #include <iostream>
-#include <map>
-#include <algorithm>
-#include <vector>
+#include <unordered_set>
 using namespace std;
 int N, M;
-map<string, bool> m;
-vector<string> v;
+unordered_set<string> keyword;
 void input();
-void sol();
 
 int main(void)
 {
@@ -21,31 +17,31 @@ int main(void)
 void input()
 {
     cin >> N >> M;
+
     for (int i = 0; i < N; i++)
     {
         string str;
         cin >> str;
-        m[str] = true;
+        keyword.insert(str);
     }
+
     for (int i = 0; i < M; i++)
     {
         string str;
         cin >> str;
-        int index = 0;
-        while (1)
+        string tmp;
+        for (int j = 0; j < str.length(); j++)
         {
-            int findIdx = str.find(',');
-            if (findIdx == string::npos)
+            if (str[j] != ',')
+                tmp += str[j];
+            else
             {
-                v.push_back(str.substr(index));
-                break;
+                if (keyword.find(tmp) != keyword.end())
+                    keyword.erase(tmp);
+                tmp = "";
             }
-            v.push_back(str.substr(index, findIdx - index));
-            index = findIdx + 1;
         }
+        cout << "tmp: " << tmp << endl;
+        cout << keyword.size() << endl;
     }
-}
-
-void sol(int score)
-{
 }
